@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:secure_qr_flutter/secure_qr_flutter.dart';
+import 'package:secure_qr_flutter/src/auto_regenerating_qr_widget.dart';
+import 'package:secure_qr_flutter/src/validity_indicator_qr_widget.dart';
 import 'helpers/test_data.dart';
 
 void main() {
@@ -11,7 +13,7 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: AutoRegeneratingQR(
+          body: AutoRegeneratingQRWidget(
             data: TestData.sampleData,
             generator: generator,
             regenerationInterval: const Duration(seconds: 1),
@@ -35,7 +37,7 @@ void main() {
 
       await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-          body: ValidityIndicatorQR(
+          body: ValidityIndicatorQRWidget(
             qrData: qrData,
             generator: generator,
             qrBuilder: (data) => Text('QR: $data'),
