@@ -1,0 +1,25 @@
+name: secure_qr_flutter
+description: Une librairie Flutter pour générer des QR codes sécurisés avec chiffrement et auto-régénération
+version: 1.0.0
+homepage: https://github.com/inossan-dev/secure_qr_flutter.git
+
+environment:
+  #sdk: ">=2.17.0 <4.0.0"
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  crypto: ^3.0.3
+  encrypt: ^5.0.1
+  uuid: ^3.0.7
+  qr_flutter: ^4.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.4.4
+  flutter_lints: ^4.0.0
+
+flutter:
