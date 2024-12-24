@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:secure_qr_flutter/secure_qr_flutter.dart';
-import 'package:secure_qr_flutter/src/auto_regenerating_qr_widget.dart';
 
 void main() {
   group('Configuration Tests', () {
@@ -12,7 +11,7 @@ void main() {
       );
 
       expect(config.enableEncryption, true);
-      expect(config.secretKey.length, greaterThanOrEqualTo(32));
+      expect(config.secretKey?.length, greaterThanOrEqualTo(32));
     });
 
     test('Config avec chiffrement désactivé', () {

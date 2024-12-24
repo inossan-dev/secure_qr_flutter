@@ -28,7 +28,7 @@ class SecureQRConfig {
   /// - Faire au moins 32 caractères si le chiffrement est activé
   /// - Rester confidentielle et être stockée de manière sécurisée
   /// - Être identique sur tous les appareils devant valider les QR codes
-  final String secretKey;
+  final String? secretKey;
 
   /// Durée de validité des QR codes générés.
   ///
@@ -80,13 +80,22 @@ class SecureQRConfig {
   /// Throws :
   /// - [ArgumentError] si la clé est trop courte quand le chiffrement est activé
   SecureQRConfig({
-    required this.secretKey,
+    this.secretKey,
     this.validityDuration = const Duration(minutes: 5),
     this.enableEncryption = true,
     this.enableSignature = true,
   }) {
-    if (enableEncryption && secretKey.length < 32) {
-      throw ArgumentError('La clé secrète doit faire au moins 32 caractères quand le chiffrement est activé');
+    if ((enableEncryption || enableSignature) && secretKey == null) {
+      throw ArgumentError(
+          'La clé secrète est requise quand le chiffrement ou la signature est activé'
+      );
+    }
+
+    // La vérification de longueur ne s'applique que si le chiffrement est activé
+    if (enableEncryption && secretKey != null && secretKey!.length < 32) {
+      throw ArgumentError(
+          'La clé secrète doit faire au moins 32 caractères quand le chiffrement est activé'
+      );
     }
   }
 }

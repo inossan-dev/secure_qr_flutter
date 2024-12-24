@@ -52,8 +52,8 @@ class SecureQRGenerator {
   /// dans la configuration. Le chiffrement utilise l'algorithme AES avec la clé
   /// fournie dans la configuration (complétée à 32 caractères si nécessaire).
   SecureQRGenerator(this.config) :
-        _encrypter = config.enableEncryption ?
-        Encrypter(AES(Key.fromUtf8(config.secretKey.padRight(32)))) : null,
+        _encrypter = config.enableEncryption && config.secretKey != null ?
+        Encrypter(AES(Key.fromUtf8(config.secretKey!.padRight(32)))) : null,
         _iv = config.enableEncryption ? IV.fromLength(16) : null;
 
   /// Génère un payload sécurisé pour un QR code à partir des données fournies.
@@ -183,8 +183,12 @@ class SecureQRGenerator {
   ///
   /// Returns : Signature sous forme de chaîne hexadécimale
   String _generateSignature(Map<String, dynamic> payload) {
+    if (!config.enableSignature || config.secretKey == null) {
+      return '';
+    }
+
     final data = jsonEncode(payload);
-    final key = utf8.encode(config.secretKey);
+    final key = utf8.encode(config.secretKey!);
     final bytes = utf8.encode(data);
     final hmac = Hmac(sha256, key);
     final digest = hmac.convert(bytes);
